@@ -1,19 +1,18 @@
 # jpa-cicd-custombuild
 
 ## Intro
-A prototype cicd buid pipeline to check that
-* We can kick off a build to build 2 containers
+A prototype cicd buid pipeline to check that we can:
+* Build 2 containers
 * Spin up a VM on demand with parameterised instance types, images etc.
-* Run the 2 containers in the VM to simulate an integration test
+* Run the 2 containers in the VM to simulate an integration test between the containers
 * Shutdown and cleanup the instance
 
-One container is a web server returning 'Hello World'
+One container is a web server returning 'Hello World'.
 The second container curls the server response to stdout which should then be visible in the build logs.
 
-More sophisticated data exchange can be imageined to verify results, for example the remote-builder step copies the Cloud Build workspace directory between the VM and the build environment.
+More sophisticated data exchange can be imageined to verify results, for example the remote-builder step copies the Cloud Build "workspace" directory back and forth between the build environment and the VM.
 
 This is all orchestrated by the ./cicdbuild/cloudbuild.yaml file.
-
 
 ## Setup
 * Create a GCP project and enable the following APIs:
@@ -27,7 +26,6 @@ This is all orchestrated by the ./cicdbuild/cloudbuild.yaml file.
 gcloud builds submit --config ./cicdbuild/cloudbuild.yaml . 
 ```
 * The build log should show the 'Hello World' message.
-
 
 ## Disclaimer
 * This is not an officially supported Google repo/product.
