@@ -1,0 +1,18 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hello-node-client:latest', './client' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/$PROJECT_ID/hello-node-client:latest"]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hello-node-server:latest', './server' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/$PROJECT_ID/hello-node-server:latest"]
+- name: gcr.io/$PROJECT_ID/remote-builder
+  env:
+    # Use Container Optimized OS
+    # https://cloud.google.com/container-optimized-os/docs/
+    - INSTANCE_ARGS=--image-project cos-cloud --image-family cos-stable
+    - ZONE=europe-west4-a
+    - USERNAME=cloud-user
+    # Run a script from the local build context in a Docker container
+    - COMMAND=bash -xe ./workspace/cicdbuild/customBuildStep.sh
