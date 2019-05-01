@@ -15,4 +15,4 @@ steps:
     - ZONE=europe-west4-a
     - USERNAME=cloud-user
     # Run a script from the local build context in a Docker container
-    - COMMAND=bash -xe ./workspace/cicdbuild/customBuildStep.sh
+    - COMMAND=bash -xe ./workspace/cicdbuild/customBuildStep.sh $PROJECT_ID
